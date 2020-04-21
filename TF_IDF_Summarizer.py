@@ -160,7 +160,7 @@ def get_threshold (sentence_score):
         sum = sum + sentence_score[s]
 
     sentence_count = len(sentence_score.keys())
-
+    
     threshold = sum / sentence_count
 
     return threshold

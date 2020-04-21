@@ -34,10 +34,10 @@ def uploadFile():
     text = re.sub(r'\[[0-9]*\]',' ',text)
     text = re.sub(r'\s+',' ',text)
 
-    content1 = sentence_score_summarizer.main_func(text)
     content2 = TF_IDF_Summarizer.main_function(text)
     # disease "professional name" analysis chart
     disease_analysis.print_analysis(text)
+    content1 = sentence_score_summarizer.main_func(text)
     
 
 def readFromWeb(): # Need to install BeautifulSoup 4, lxml
@@ -59,16 +59,19 @@ def readFromWeb(): # Need to install BeautifulSoup 4, lxml
             extracted_article = re.sub(r'\s+',' ',extracted_article)
 
             extracted_article = re.sub(r'\[[0-9]*\]',' ',extracted_article)
+    
         except:
             messagebox.showwarning(title="Input Error", message="URL Error, please re-enter.")
+        
+                    
+        content2 = TF_IDF_Summarizer.main_function(extracted_article)
+        # disease "professional name" analysis chart
+        disease_analysis.print_analysis(extracted_article)
+        content1 = sentence_score_summarizer.main_func(extracted_article)
 
-
-    content1 = sentence_score_summarizer.main_func(extracted_article)
-    content2 = TF_IDF_Summarizer.main_function(extracted_article)
-    # disease "professional name" analysis chart
-    disease_analysis.print_analysis(extracted_article)
 
 def playGUI():
+    global url_text
     # initialize the window and frame
     window = Tk(className=' Summary Text Analysis Generator')
     window.configure(bg=background)
@@ -88,7 +91,6 @@ def playGUI():
     
     # enter website or upload file
     Label(fm, text="Website URL:", font=("Consolas",13), bg=background).pack(side = LEFT, expand = True)
-    global url_text
     url_text = Entry(fm, width=50, bd=2)
     url_text.pack(side = LEFT, expand = True)
     Button(fm, text="GO!", command=readFromWeb, font=("Consolas",12, 'bold'), bd=1, bg=button_color, fg="white").pack(side = LEFT, expand = True)
@@ -133,6 +135,7 @@ def summaryGUI(text1, text2):
     # export user's preferred file
     Button(root, text="Choose this -->", command=exportRightFile, font=("Consolas", 12, 'bold'), bd=1, bg=background, fg="white").pack(side=BOTTOM)
     Button(root, text="<-- Choose this", command=expotLeftFile, font=("Consolas", 12, 'bold'), bd=1, bg=background, fg="white").pack(side=BOTTOM)
+    Button(root, text="Main Page", command=root.destroy, font=("Consolas", 12, 'bold'), bd=1, bg=background, fg="white").pack(side=TOP)
     
     root.mainloop()
 
@@ -141,14 +144,18 @@ def expotLeftFile(): # for sentence_score_summarizer
     f = open("summary_report_v1.txt", "w")
     f.write(content1)
     f.close()
+    sys.exit()
 
 def exportRightFile(): # for TF_IDF_Summarizer
     global content2
     f = open("summary_report_v2.txt", "w")
     f.write(content2)
     f.close()
+    sys.exit()
 
 if __name__ == '__main__':
-    playGUI()
-    if content1 != '' and content2 != '':
-        summaryGUI(content1, content2)
+
+    while True:
+        playGUI()
+        if content1 != '' and content2 != '':
+            summaryGUI(content1, content2)
