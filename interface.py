@@ -11,6 +11,7 @@ import urllib.request
 import re
 import TF_IDF_Summarizer  # summarizer v1
 import sentence_score_summarizer # summarizer v2
+import disease_analysis
     
 url_text = ''
 content1 = ''
@@ -26,7 +27,7 @@ img = img.resize((160, 40), Image.ANTIALIAS)
 
 def uploadFile():
     global content1, content2
-    # NOTE: Now we accept .pdf and .txt file to upload, extract its words to a full "string" paragraph.
+    # Browse .pdf or .txt file from user
     fileRead = filedialog.askopenfile(title = "Select file", filetypes= (("PDF files","*.pdf"),("Text files","*.txt")))
     raw_content = parser.from_file(fileRead.name)
     text = raw_content['content']
@@ -34,8 +35,9 @@ def uploadFile():
     text = re.sub(r'\s+',' ',text)
 
     content1 = sentence_score_summarizer.main_func(text)
-    print('\n\n')
-    content2 = TF_IDF_Summarizer.main_function(text) 
+    content2 = TF_IDF_Summarizer.main_function(text)
+    # disease "professional name" analysis chart
+    disease_analysis.print_analysis(text)
     
 
 def readFromWeb(): # Need to install BeautifulSoup 4, lxml
@@ -43,6 +45,7 @@ def readFromWeb(): # Need to install BeautifulSoup 4, lxml
     web_url = str(url_text.get())
     print(web_url)
     extracted_article = ''
+    
     # https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_pandemic
     if web_url != '':
         try:
@@ -59,10 +62,11 @@ def readFromWeb(): # Need to install BeautifulSoup 4, lxml
         except:
             messagebox.showwarning(title="Input Error", message="URL Error, please re-enter.")
 
-    # print (extracted_article)
+
     content1 = sentence_score_summarizer.main_func(extracted_article)
-    print('\n\n')
     content2 = TF_IDF_Summarizer.main_function(extracted_article)
+    # disease "professional name" analysis chart
+    disease_analysis.print_analysis(extracted_article)
 
 def playGUI():
     # initialize the window and frame
@@ -95,17 +99,21 @@ def playGUI():
     Button(window, text="See your Summary Report -->", font=('Consolas', 12,'bold'), command=window.destroy, bg="yellow", fg=bg2).pack(side=RIGHT)
     window.mainloop()
 
+
 def summaryGUI(text1, text2):
     text_bg = '#361642'
     root = Tk(className=' Summary Board')
     root.geometry('1100x500')
     root.config(bg=text_bg)
     
+    # Titles
     fm = Frame(root)
     fm.configure(bg=text_bg)
     fm.pack(side=TOP, fill=X)
     Label(fm, height=1, width=23, text="Summarizor_Version_1", fg=text_bg, font = ('Times', 16, 'bold')).pack(side=LEFT, expand=True)
     Label(fm, height=1, width=23, text="Summarizor_Version_2", fg=text_bg, font = ('Times', 16, 'bold')).pack(side=RIGHT, expand=True)
+    
+    # Scrollbar and output text
     S1 = Scrollbar(root)
     S2 = Scrollbar(root)
     T1 = Text(root, spacing2=3, font=('Consolas', 12, 'bold'), height=20, width=50, bg=text_bg, fg='white')

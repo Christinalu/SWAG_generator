@@ -52,10 +52,10 @@ def main_func(text):
     # Gettings best 5 lines             
     best_sentences = heapq.nlargest(5, score, key=score.get)
 
-    print('-------------------------------------------------------')
+    # print('-------------------------------------------------------')
 
     best = ""
     for sentence in best_sentences:
         best += sentence + ' '
-    # print(best)
+        
     return best

@@ -231,11 +231,11 @@ def freq_histogram (text):
     plt.ylabel("Frequency")
     plt.show()
     plt.close()
-    
+
 def main_function(test_text):
     textdata = preprocess_data(test_text)
     summarization = super_summarizer_all_functions(textdata)
-    # print(summarization)
     freq_histogram (textdata)
+    
     return summarization
     
