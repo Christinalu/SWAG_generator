@@ -34,6 +34,12 @@ pip install nltk
 pip install nltk.corpus
 ```
 
+## Running the tests
+There are some pdf files in test_files folder for user testing
+```
+Python interface.py
+```
+
 ## Authors
 * **Huaicheng Deng** <hda25@sfu.ca>
 * **Daniel Chang** <dschang@sfu.ca>
