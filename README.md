@@ -10,6 +10,15 @@ You will need the latest version of Java (Java 8) to run sucessfully.
 
 ### Installing
 ```
+pip install pickle
+```
+```
+pip install re
+```
+```
+pip install sklearn
+```
+```
 pip install tkinter
 ```
 ```
@@ -20,6 +29,9 @@ pip install scispacy
 ```
 ```
 pip install nltk
+```
+```
+pip install nltk.corpus
 ```
 
 ## Authors
