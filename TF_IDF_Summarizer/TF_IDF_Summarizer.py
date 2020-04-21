@@ -244,10 +244,11 @@ def freq_histogram (text):
     sorted_d = dict(sorted(freq_list.items(), key=operator.itemgetter(1),reverse = True))
 
     for k, v in sorted_d.items():
-        if k not in symbol:
-            most_freq_words[k] = v
+        if k.lower() not in symbol:
+            if k.lower() not in nltk.corpus.stopwords.words('english'):
+                most_freq_words[k] = v
     
-    most_five = dict(itertools.islice(most_freq_words.items(),5))
+    most_five = dict(itertools.islice(most_freq_words.items(),10))
     plt.bar(most_five.keys(),most_five.values(), width = 0.8, color = 'skyblue',linewidth = 1.0)
     plt.title("Words Frequency Histogram", loc = 'center')
     plt.xlabel("Word")
