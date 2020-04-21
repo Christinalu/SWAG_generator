@@ -22,7 +22,7 @@ background = '#66cccc'
 foreground = '#f1ccb8'
 button_color = '#ED5752'
 bg2 = '#400082'
-img = Image.open('src\\swag.png')
+img = Image.open('image\\swag.png')
 img = img.resize((160, 40), Image.ANTIALIAS)
 
 def uploadFile():

@@ -44,8 +44,6 @@ def word_freq_without_stem(text):
     return freq_list_no_stem
 
     
-
-
 def word_frequency_matrix(sentToken):
 
     freq_matrix = {}
